@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Romantic Countdown</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow-x: hidden;
+      background: linear-gradient(135deg, #6a11cb, #2575fc);
+      color: white;
+    }
+    #canvas-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      width: 100%;
+    }
+    #quote {
+      font-size: 1.5rem;
+      color: white;
+      text-align: center;
+      margin: 20px;
+      opacity: 0;
+      transition: opacity 2s ease-in-out;
+      padding: 0 10px;
+    }
+    .photo-container {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transform: translateY(100px);
+      opacity: 0;
+      transition: transform 1s ease-out, opacity 1s ease-out;
+      padding: 0 10px;
+    }
+    .photo-container img {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      border-radius: 20px;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    }
+    .photo-container.visible {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    @media (min-width: 768px) {
+      #quote {
+        font-size: 2rem;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      #quote {
+        font-size: 2.5rem;
+      }
+      .photo-container img {
+        max-width: 800px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="canvas-container"></div>
+  <div id="quote">"Your beauty illuminates my world brighter than a thousand suns."</div>
+  <div class="photo-container" id="photo-container">
+    <img src="https://source.unsplash.com/800x600/?romantic,nature" alt="Romantic Scene">
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js"></script>
+  <script>
+    let countdown = 5;
+
+    function setup() {
+      let canvas = createCanvas(windowWidth, windowHeight);
+      canvas.parent("canvas-container");
+      textAlign(CENTER, CENTER);
+      textSize(windowWidth < 768 ? 48 : 64);
+      fill(255);
+    }
+
+    function draw() {
+      background(50, 100, 150);
+      if (countdown > 0) {
+        text(`Countdown: ${countdown}`, width / 2, height / 2);
+      } else {
+        text("Time for something beautiful...", width / 2, height / 2);
+        noLoop();
+        setTimeout(showQuote, 1000);
+      }
+    }
+
+    function showQuote() {
+      document.getElementById("quote").style.opacity = 1;
+      setTimeout(() => {
+        document.getElementById("photo-container").classList.add("visible");
+      }, 2000);
+    }
+
+    function windowResized() {
+      resizeCanvas(windowWidth, windowHeight);
+      textSize(windowWidth < 768 ? 48 : 64);
+    }
+
+    setInterval(() => {
+      if (countdown > 0) countdown--;
+    }, 1000);
+  </script>
+</body>
+</html>
