@@ -32,6 +32,10 @@
       opacity: 0;
       transition: opacity 2s ease-in-out;
       padding: 0 10px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
     }
     .photo-container {
       height: 100vh;
@@ -79,6 +83,7 @@
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/scrollreveal/4.0.9/scrollreveal.min.js"></script>
   <script>
     let countdown = 5;
 
@@ -102,10 +107,21 @@
     }
 
     function showQuote() {
-      document.getElementById("quote").style.opacity = 1;
+      const quote = document.getElementById("quote");
+      quote.style.opacity = 1;
       setTimeout(() => {
-        document.getElementById("photo-container").classList.add("visible");
-      }, 2000);
+        quote.style.opacity = 0;
+        revealImage();
+      }, 5000);
+    }
+
+    function revealImage() {
+      ScrollReveal().reveal("#photo-container", {
+        duration: 2000,
+        distance: "100px",
+        opacity: 0,
+        reset: false,
+      });
     }
 
     function windowResized() {
